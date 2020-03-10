@@ -39,14 +39,4 @@ public class Webpage {
         return from;
     }
 
-    public Map.Entry getRecentUnmarkedTimestamp(Map.Entry<TimeStamp, String> entry){
-        Map.Entry<TimeStamp, String> maxEntry = entry;
-            for (Map.Entry<TimeStamp, String> entryToBeCompared : this.getSortedByTimeStamp().entrySet()) {
-                if (maxEntry.getKey().isYoungerThan(entryToBeCompared.getKey()) && !entryToBeCompared.getValue().contains("printed")) {
-                    maxEntry = entryToBeCompared;
-                }
-            }
-            return maxEntry;
-        }
-
 }
