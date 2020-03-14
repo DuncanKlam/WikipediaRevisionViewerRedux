@@ -42,6 +42,11 @@ public class TimeStamp {
         return second;
     }
 
+    public int[] getCoordinates(){
+        int[] coordinates = {year+month+day, hour+minute+second};
+        return coordinates;
+    }
+
     public boolean isYoungerThan(TimeStamp stampToBeChecked) {
         if (this.year < stampToBeChecked.getYear()){
             return true;}
@@ -71,7 +76,7 @@ public class TimeStamp {
         String monthString = findMonthFromNumber(month);
         String meridiam = AMorPM(hour);
         return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridiam, monthString, day+getSuffix(day)+",", year);
-                            //ex 10:27:34 PM, February 2nd, 2020
+                          //ex 10:2 7:34  PM February 2nd, 2020
     }
 
     private String findMonthFromNumber(int month) {
@@ -115,4 +120,5 @@ public class TimeStamp {
             return "?";
         }
     }
+
 }
