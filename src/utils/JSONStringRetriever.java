@@ -6,9 +6,9 @@ import java.net.*;
 
 public class JSONStringRetriever {
 
-    public static String getJSONstring(String input, String number) throws IOException {
+    public static String getJSONstring(String input) throws IOException {
         input = input.replaceAll(" ", "%20");
-        URL url = new URL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" + input + "&rvprop=timestamp|user&rvlimit="+number+"&redirects");
+        URL url = new URL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" + input + "&rvprop=timestamp|user&rvlimit=30&redirects");
         URLConnection connection = url.openConnection();
         connection.setRequestProperty("User-Agent",
                 "Revision Tracker/0.1 (http://www.cs.bsu.edu/; yourusername@bsu.edu)");
