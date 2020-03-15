@@ -6,9 +6,9 @@ public class Webpage {
 
     private Map<TimeStamp, String> sortedByTimeStamp;
     private Map<String, Integer> sortedByQuantity;
-    private String to = " ";
-    private String from = " ";
-    private String title = " ";
+    private String to;
+    private String from;
+    private String title;
 
 
     public Webpage(Map<TimeStamp, String> aSortedByTimeStampMap, Map<String, Integer> aSortedByQuantityMap, String aTo, String aFrom, String aTitle){
@@ -38,4 +38,5 @@ public class Webpage {
     public String getFrom() {
         return from;
     }
+
 }
