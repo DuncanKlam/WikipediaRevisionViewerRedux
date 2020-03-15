@@ -35,9 +35,14 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         var inputLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(inputLabel, inputLabelConstraints);
 
+        //#orevisions Label
+        JLabel numORevisionsLabel = new JLabel("# o' revisions");
+        var numORevisionsLabelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(numORevisionsLabel, numORevisionsLabelConstraints);
+
         //Title Label
         JLabel titleLabel = new JLabel("Title:");
-        var titleLabelConstraints = new GridBagConstraints(0, 1, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var titleLabelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(titleLabel, titleLabelConstraints);
 
         //Redirected Label
@@ -55,9 +60,9 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         var toLabelConstraints = new GridBagConstraints(4, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(toLabel, toLabelConstraints);
 
-        //30Recent Label
-        JLabel recentLabel = new JLabel("30 Recent: ");
-        var recentLabelConstraints = new GridBagConstraints(0, 2, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        //Recent Label
+        JLabel recentLabel = new JLabel("Recent: ");
+        var recentLabelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(recentLabel, recentLabelConstraints);
 
         //MostEdits Label
@@ -77,8 +82,13 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
 
         //Make the input window
         JTextField txtInput = new JTextField("");
-        var txtInputConstraints = new GridBagConstraints(1, 0, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
+        var txtInputConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
         panel.add(txtInput, txtInputConstraints);
+
+        //Make the revisions number window
+        JTextField numberInput = new JTextField("");
+        var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
+        panel.add(numberInput, numberInputConstraints);
 
         //Make empty Jlist for timestamps
         JList<Object> timestampArray = new JList<>();
@@ -101,19 +111,22 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         panel.add(editNumberArray, editNumberArrayConstraints);
 
         //Make getRevisions Button
-        JButton revisionsButton = new JButton("get revisions");
-        var revisionsButtonConstraints = new GridBagConstraints(3, 0, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        JButton revisionsButton = new JButton("fetch");
+        var revisionsButtonConstraints = new GridBagConstraints(4, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(revisionsButton, revisionsButtonConstraints);
         revisionsButton.addActionListener(e -> {
             String searchEntry = txtInput.getText();
+            String number = numberInput.getText();
             if (!JSONStringRetriever.isConnected()) { errorDisplayLabel.setText("Internet is not connected.");}
             try {
-                String JSONString = JSONStringRetriever.getJSONstring(searchEntry);
+                String JSONString = JSONStringRetriever.getJSONstring(searchEntry,number);
                 if (JSONString.equals("Error")) { errorDisplayLabel.setText("No article exists. Try again.");}
                 else {
                     WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
                     Webpage webpage = WebpageBuilder.buildAWebpage(webInfo);
 
+                    recentLabel.setText(number + " Recent:");
+                    editsNumLabel.setText("Number of Edits (based on " + number + " recent):");
                     titleLabel.setText("Title: " + webpage.getTitle());
                     fromLabel.setText("From: " + webpage.getFrom());
                     toLabel.setText("To: " + webpage.getTo());
@@ -138,7 +151,7 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         });
 
         //Closing thoughts, final window creation
-        setPreferredSize(new Dimension(400, 600));
+        setPreferredSize(new Dimension(1300, 1000));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);

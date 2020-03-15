@@ -69,11 +69,16 @@ public class TimeStamp {
 
     public String getFormattedTimeStamp() {
         String monthString = findMonthFromNumber(month);
+<<<<<<< HEAD
         String meridiam = AMorPM(hour);
         return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridiam, monthString, day+getSuffix(day)+",", year);
 <<<<<<< HEAD
                             //ex 10:27:34 PM, February 2nd, 2020
 =======
+=======
+        String meridian = AMorPM(hour);
+        return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridian, monthString, day+getSuffix(day)+",", year);
+>>>>>>> parent of 56a31ae... Revert "Added Ability to change number of results"
                           //ex 10:2 7:34  PM February 2nd, 2020
 >>>>>>> parent of 02e2728... Added Ability to change number of results
     }
