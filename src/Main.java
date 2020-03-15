@@ -1,3 +1,4 @@
+import UI.RevisionViewerUI;
 import domain.WebInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
@@ -25,7 +26,7 @@ public class Main{
                     System.out.println("Internet is not connected.");
                     break;}
 
-                String JSONString = JSONStringRetriever.getJSONstring(input);
+                String JSONString = JSONStringRetriever.getJSONstring(input,"50");
                 if (JSONString.equals("Error")) {
                     System.out.println("No article exists. Please try again.");
                 } else {
@@ -45,14 +46,14 @@ public class Main{
                         String[] timeStamps = sorter.sortedFormattedTimeStamps;
                         String[] tsUsernames = sorter.sortedByTSUsernames;
                         for (int index = 0; index < timeStamps.length; index++){
-                            System.out.printf("%-25.25s at %s\n", timeStamps[index],tsUsernames[index]);
+                            System.out.printf("%-25.25s at %s\n",tsUsernames[index] ,timeStamps[index]);
                         }
                     }
                     else if (displayChoice.equals("b")) {
                         String[] eUsernames = sorter.sortedByEUsernames;
                         String[] editValues = sorter.sortedUserEdits;
-                        for (int index = 0; index < eUsernames.length; index++){
-                            System.out.printf("%-25.25s made %s\n",eUsernames[index],editValues[index]);
+                        for (int index = 0; index < eUsernames.length - 1; index++){
+                            System.out.printf("%-25.25s made %s\n",eUsernames[index], editValues[index]);
                         }
 
                     } else {

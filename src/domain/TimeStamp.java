@@ -74,8 +74,8 @@ public class TimeStamp {
 
     public String getFormattedTimeStamp() {
         String monthString = findMonthFromNumber(month);
-        String meridiam = AMorPM(hour);
-        return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridiam, monthString, day+getSuffix(day)+",", year);
+        String meridian = AMorPM(hour);
+        return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridian, monthString, day+getSuffix(day)+",", year);
                           //ex 10:2 7:34  PM February 2nd, 2020
     }
 
