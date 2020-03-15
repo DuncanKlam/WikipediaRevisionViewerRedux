@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import domain.TimeStamp;
+=======
+>>>>>>> parent of 02e2728... Added Ability to change number of results
 import domain.WebInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
@@ -42,6 +45,7 @@ public class Main {
                     System.out.println("Type 'b' to see a list of who has made the most recent edits.");
                     String displayChoice = br.readLine();
                     if (displayChoice.equals("a")) {
+<<<<<<< HEAD
                         Object[] keyObjArray = webpage.getSortedByTimeStamp().keySet().toArray();
                         TimeStamp[] keyArray = new TimeStamp[keyObjArray.length];
                         Object[] valueObjArray = webpage.getSortedByTimeStamp().values().toArray();
@@ -86,6 +90,19 @@ public class Main {
                             }
                             System.out.printf("%-3s %-25.25s made %d edit%s\n", index +".",keyArray[g],valueArray[g], pluralizer);
                             index++;
+=======
+                        String[] timeStamps = sorter.sortedFormattedTimeStamps;
+                        String[] tsUsernames = sorter.sortedByTSUsernames;
+                        for (int index = 0; index < timeStamps.length; index++){
+                            System.out.printf("%-25.25s at %s\n", timeStamps[index],tsUsernames[index]);
+                        }
+                    }
+                    else if (displayChoice.equals("b")) {
+                        String[] eUsernames = sorter.sortedByEUsernames;
+                        String[] editValues = sorter.sortedUserEdits;
+                        for (int index = 0; index < eUsernames.length; index++){
+                            System.out.printf("%-25.25s made %s\n",eUsernames[index],editValues[index]);
+>>>>>>> parent of 02e2728... Added Ability to change number of results
                         }
                     } else {
                         System.out.println("Incorrect Input. Please Try again.");

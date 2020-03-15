@@ -71,7 +71,11 @@ public class TimeStamp {
         String monthString = findMonthFromNumber(month);
         String meridiam = AMorPM(hour);
         return String.format("%2s:%2s:%2s %s %-10s %-5s %d", makeDoubleDigits(hour), makeDoubleDigits(minute), makeDoubleDigits(second), meridiam, monthString, day+getSuffix(day)+",", year);
+<<<<<<< HEAD
                             //ex 10:27:34 PM, February 2nd, 2020
+=======
+                          //ex 10:2 7:34  PM February 2nd, 2020
+>>>>>>> parent of 02e2728... Added Ability to change number of results
     }
 
     private String findMonthFromNumber(int month) {
