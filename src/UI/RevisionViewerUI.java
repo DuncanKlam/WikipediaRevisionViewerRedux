@@ -91,50 +91,45 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
         panel.add(numberInput, numberInputConstraints);
 
-
         //Make Scrollable List for Timestamps
         JList<Object> timestampArray = new JList<>();
         timestampArray.setLayoutOrientation(JList.VERTICAL);
-        JScrollPane TSScrollPane = new JScrollPane(timestampArray);
-        TSScrollPane.setMinimumSize(new Dimension(200, 200));
-        TSScrollPane.setMaximumSize(new Dimension(200, 500));
-        var TSScrollPaneConstraints = new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        //panel.add(TSScrollPane, TSScrollPaneConstraints);
 
-        //Make Scrollable List for Usernames
+        //Make Scrollable List for Username
         JList<Object> usernameArray = new JList<>();
         usernameArray.setLayoutOrientation(JList.VERTICAL);
-        JScrollPane USScrollPane = new JScrollPane(usernameArray);
-        USScrollPane.setMinimumSize(new Dimension(200,200));
-        USScrollPane.setMaximumSize(new Dimension(200,500));
-        var USScrollPaneConstraints = new GridBagConstraints(0, 3, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        //panel.add(USScrollPane, USScrollPaneConstraints);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,USScrollPane, TSScrollPane);
-        panel.add(splitPane, USScrollPaneConstraints);
+        //Make SplitPane to put Username and Timestamps in
+        JSplitPane USTSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, usernameArray, timestampArray);
+        JScrollPane USTScrollPane = new JScrollPane(USTSplitPane);
+        USTScrollPane.setMinimumSize(new Dimension(400,500));
+        USTScrollPane.setMaximumSize(new Dimension(800,1500));
+        var USTScrollPaneConstraints = new GridBagConstraints(0, 3, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(USTScrollPane, USTScrollPaneConstraints);
 
-        //Make Scrollable List for editsUsernames
+        //Make Scrollable List for editsUsername
         JList<Object> usernameEditsArray = new JList<>();
         usernameEditsArray.setLayoutOrientation(JList.VERTICAL);
-        JScrollPane UEScrollPane = new JScrollPane(usernameEditsArray);
-        UEScrollPane.setMinimumSize(new Dimension(200,200));
-        UEScrollPane.setMaximumSize(new Dimension(200,500));
-        var UEScrollPaneConstraints = new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(usernameEditsArray, UEScrollPaneConstraints);
 
         //Make Scrollable List for editNumbers
         JList<Object> editNumberArray = new JList<>();
         editNumberArray.setLayoutOrientation(JList.VERTICAL);
-        JScrollPane UENScrollPane = new JScrollPane(editNumberArray);
-        UENScrollPane.setMinimumSize(new Dimension(200,200));
-        UENScrollPane.setMaximumSize(new Dimension(200,500));
-        var UENScrollpaneConstraints = new GridBagConstraints(4, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(editNumberArray, UENScrollpaneConstraints);
+
+        //Make SplitPane to put editsUsername and editsNumbers
+        JSplitPane USNSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, usernameEditsArray, editNumberArray);
+        JScrollPane USNScrollPane = new JScrollPane(USNSplitPane);
+        USNScrollPane.setMinimumSize(new Dimension(400,500));
+        USNScrollPane.setMaximumSize(new Dimension(800, 1500));
+        var USNScrollPaneConstraints = new GridBagConstraints(3, 3, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(USNScrollPane,USNScrollPaneConstraints);
 
         //Make Quit button
         JButton quitButton = new JButton("Quit");
         var quitButtonConstraints = new GridBagConstraints(4, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(quitButton, quitButtonConstraints);
+        quitButton.addActionListener(e -> {
+            System.exit(0);
+        });
 
         //Make getRevisions Button
         JButton revisionsButton = new JButton("fetch");

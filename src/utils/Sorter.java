@@ -27,15 +27,15 @@ public class Sorter {
         Integer[] userEditNumbersArray = new Integer[sbqValueArray.length];
 
         //convert arrays from Object[] to TimeStamp[] and String[]
-        for (int k=0; k<sbtKeyArray.length; k++){
-            tSArray[k] = (TimeStamp) sbtKeyArray[k];
-            userArray[k] = (String) sbtValueArray[k];
+        for (int i=0; i<sbtKeyArray.length; i++){
+            tSArray[i] = (TimeStamp) sbtKeyArray[i];
+            userArray[i] = (String) sbtValueArray[i];
         }
 
         //Object[] to String[] and Integer[]
-        for (int k=0; k<sbqKeyArray.length; k++){
-            eUsernamesArray[k] = (String) sbqKeyArray[k];
-            userEditNumbersArray[k] = (Integer) sbqValueArray[k];
+        for (int i=0; i<sbqKeyArray.length; i++){
+            eUsernamesArray[i] = (String) sbqKeyArray[i];
+            userEditNumbersArray[i] = (Integer) sbqValueArray[i];
         }
 
         //Swap values to order
@@ -58,23 +58,22 @@ public class Sorter {
         //Format and convert Timestamps to Strings and adding an index value to usernames
         for (int i = 0; i < tSArray.length; i++){
             userArray[i] = String.format("%-3s %s",i+1+".",userArray[i]);
-            tSStringArray[i] = (i+1+". ") + tSArray[i].getFormattedTimeStamp();
+            tSStringArray[i] = tSArray[i].getFormattedTimeStamp();
         }
         sortedFormattedTimeStamps = tSStringArray;
         sortedByTSUsernames = userArray;
 
-
         //Format and reverse sorted-by-quantity arrays
         sortedByEUsernames = new String[eUsernamesArray.length];
         sortedEValues = new String[userEditNumbersArray.length];
-        int index = 1;
-        for (int g=eUsernamesArray.length-1; g > 0; g--){
+        int index = 0;
+        for (int i=eUsernamesArray.length-1; i > 0; i--){
             String pluralize = "";
-            if (userEditNumbersArray[g]>1){
+            if (userEditNumbersArray[i]>1){
                 pluralize = "s";
             }
-            sortedByEUsernames[index-1] = String.format("%-3s %-25.25s", index+".", eUsernamesArray[g]);
-            sortedEValues[index-1] = String.format("%d edit%s", userEditNumbersArray[g], pluralize);
+            sortedByEUsernames[index] = String.format("%-3s %-25.25s", index+1+".", eUsernamesArray[i]);
+            sortedEValues[index] = String.format("%d edit%s", userEditNumbersArray[i], pluralize);
             index++;
         }
     }
