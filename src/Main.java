@@ -1,4 +1,4 @@
-import domain.WebInfo;
+import domain.PageInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
 import utils.JSONStringParser;
@@ -30,8 +30,8 @@ public class Main {
                 if (JSONString.equals("Error")) {
                     System.out.println("No article exists. Please try again.");
                 } else {
-                    WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
-                    Webpage webpage = WebpageBuilder.buildAWebpage(webInfo);
+                    PageInfo pageInfo = JSONStringParser.parseJSONString(JSONString);
+                    Webpage webpage = WebpageBuilder.buildAWebpage(pageInfo);
 
                     if (!webpage.getTo().isEmpty()) {
                         System.out.printf("Redirected:\n     From: %s\n     To: %s\n\n", webpage.getFrom(), webpage.getTo());

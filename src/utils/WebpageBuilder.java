@@ -1,19 +1,19 @@
 package utils;
 
 import domain.TimeStamp;
-import domain.WebInfo;
+import domain.PageInfo;
 import domain.Webpage;
 
 import java.util.*;
 
 public class WebpageBuilder {
 
-    public static Webpage buildAWebpage(WebInfo webInfo){
-        TimeStamp[] timeStampObjectArray = makeTimeStampObjectArray(webInfo.getTimestamps());
-        Map<TimeStamp, String>  sortedByTimeStamp = combineIntoHashmap(webInfo.getUsers(), timeStampObjectArray);
-        Map<String, Integer> sortedByQuantityOfEdits = sortByQuantity(webInfo.getUsers());
+    public static Webpage buildAWebpage(PageInfo pageInfo){
+        TimeStamp[] timeStampObjectArray = makeTimeStampObjectArray(pageInfo.getTimestamps());
+        Map<TimeStamp, String>  sortedByTimeStamp = combineIntoHashmap(pageInfo.getUsers(), timeStampObjectArray);
+        Map<String, Integer> sortedByQuantityOfEdits = sortByQuantity(pageInfo.getUsers());
 
-        return new Webpage(sortedByTimeStamp, sortedByQuantityOfEdits, webInfo.getToFromTitle()[0], webInfo.getToFromTitle()[1], webInfo.getToFromTitle()[2]);
+        return new Webpage(sortedByTimeStamp, sortedByQuantityOfEdits, pageInfo.getToFromTitle()[0], pageInfo.getToFromTitle()[1], pageInfo.getToFromTitle()[2]);
     }
 
     public static TimeStamp[] makeTimeStampObjectArray(String[] timestamps) {

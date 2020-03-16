@@ -1,6 +1,6 @@
 package utils;
 
-import domain.WebInfo;
+import domain.PageInfo;
 import exceptions.ParameterIsNotJSONStringException;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +12,14 @@ class JSONStringParserTest {
     String[] userArray = {"LanHikari64", "Thanoscar21", "Nolanwebb", "Zythe", "Zzuuzz"};
     String[] timestampArray = {"2020-03-02T17:52:22Z", "2020-03-02T16:42:54Z", "2020-03-02T16:40:58Z", "2020-03-02T11:19:19Z", "2020-03-01T08:36:57Z"};
     String[] tftArray = {"Barack Obama", "Obama", "Barack Obama"};
-    WebInfo webInfoExpected =  new WebInfo(userArray, timestampArray, tftArray);
+    PageInfo pageInfoExpected =  new PageInfo(userArray, timestampArray, tftArray);
 
 
     @Test
     void parsesJSONStringToUserArray() throws ParameterIsNotJSONStringException {
         try{
-            WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
-            assertArrayEquals(webInfoExpected.getUsers(), webInfo.getUsers());
+            PageInfo pageInfo = JSONStringParser.parseJSONString(JSONString);
+            assertArrayEquals(pageInfoExpected.getUsers(), pageInfo.getUsers());
         }
         catch (ParameterIsNotJSONStringException e){
             System.out.println("ParameterIsNotJSONStringException");
@@ -29,8 +29,8 @@ class JSONStringParserTest {
     @Test
     void parsesJSONStringToTFTArray() throws ParameterIsNotJSONStringException {
         try{
-            WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
-            assertArrayEquals(webInfoExpected.getToFromTitle(), webInfo.getToFromTitle());
+            PageInfo pageInfo = JSONStringParser.parseJSONString(JSONString);
+            assertArrayEquals(pageInfoExpected.getToFromTitle(), pageInfo.getToFromTitle());
         }
         catch (ParameterIsNotJSONStringException e){
             System.out.println("ParameterIsNotJSONStringException");
@@ -40,8 +40,8 @@ class JSONStringParserTest {
     @Test
     void parsesJSONStringToTimestampsArray() throws ParameterIsNotJSONStringException {
         try{
-            WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
-            assertArrayEquals(webInfoExpected.getTimestamps(), webInfo.getTimestamps());
+            PageInfo pageInfo = JSONStringParser.parseJSONString(JSONString);
+            assertArrayEquals(pageInfoExpected.getTimestamps(), pageInfo.getTimestamps());
         }
         catch (ParameterIsNotJSONStringException e){
             System.out.println("ParameterIsNotJSONStringException");

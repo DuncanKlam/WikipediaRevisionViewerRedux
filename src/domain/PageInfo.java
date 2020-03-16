@@ -1,12 +1,12 @@
 package domain;
 
-public class WebInfo {
+public class PageInfo {
 
     private String[] users;
     private String[] timestamps;
     private String[] toFromTitle;
 
-    public WebInfo(String[] aUsersArray, String[] aTimeStampArray, String[] aTFT){
+    public PageInfo(String[] aUsersArray, String[] aTimeStampArray, String[] aTFT){
         this.users = aUsersArray;
         this.timestamps = aTimeStampArray;
         this.toFromTitle = aTFT;

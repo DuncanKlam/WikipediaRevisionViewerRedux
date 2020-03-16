@@ -4,14 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import domain.WebInfo;
+import domain.PageInfo;
 import exceptions.ParameterIsNotJSONStringException;
 
 import java.util.Map;
 
 public class JSONStringParser {
 
-    public static WebInfo parseJSONString(String JSONString) throws ParameterIsNotJSONStringException {
+    public static PageInfo parseJSONString(String JSONString) throws ParameterIsNotJSONStringException {
         if (JSONString.charAt(0) != '{') {
             throw new ParameterIsNotJSONStringException();
         }
@@ -31,7 +31,7 @@ public class JSONStringParser {
             toFromTitleArray[1] = "";
         }
 
-        WebInfo webInfo = null;
+        PageInfo pageInfo = null;
         for (Map.Entry<String, JsonElement> entry : pages.entrySet()) {
             JsonObject uniqueNumberValueObject = entry.getValue().getAsJsonObject();
             toFromTitleArray[2] = uniqueNumberValueObject.getAsJsonPrimitive("title").getAsString();
@@ -44,9 +44,9 @@ public class JSONStringParser {
                 usersArray[i] = individualRevisionObject.getAsJsonPrimitive("user").getAsString();
                 timestampsArray[i] = individualRevisionObject.getAsJsonPrimitive("timestamp").getAsString();
             }
-            webInfo = new WebInfo(usersArray, timestampsArray, toFromTitleArray);
+            pageInfo = new PageInfo(usersArray, timestampsArray, toFromTitleArray);
         }
-        return webInfo;
+        return pageInfo;
     }
 
     private static boolean youWereRedirected(JsonObject query) {

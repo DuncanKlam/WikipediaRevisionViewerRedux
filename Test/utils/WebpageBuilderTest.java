@@ -1,7 +1,7 @@
 package utils;
 
 import domain.TimeStamp;
-import domain.WebInfo;
+import domain.PageInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class WebpageBuilderTest {
     @Test
     void buildWebpageToValue() {
         try{
-            WebInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
+            PageInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
             Webpage wB1 = WebpageBuilder.buildAWebpage(wI1);
             assertEquals("Barack Obama", wB1.getTo());
         } catch (ParameterIsNotJSONStringException e) {
@@ -29,7 +29,7 @@ class WebpageBuilderTest {
     @Test
     void buildWebpageFromValue() {
         try{
-            WebInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
+            PageInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
             Webpage wB1 = WebpageBuilder.buildAWebpage(wI1);
             assertEquals("Obama", wB1.getFrom());
 
@@ -42,7 +42,7 @@ class WebpageBuilderTest {
     @Test
     void buildWebpageTitleValue() {
         try{
-            WebInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
+            PageInfo wI1 = JSONStringParser.parseJSONString(JSONString30);
             Webpage wB1 = WebpageBuilder.buildAWebpage(wI1);
             assertEquals("Barack Obama", wB1.getTitle());
 

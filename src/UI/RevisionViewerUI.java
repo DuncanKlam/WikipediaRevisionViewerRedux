@@ -1,6 +1,6 @@
 package UI;
 
-import domain.WebInfo;
+import domain.PageInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
 import utils.*;
@@ -42,49 +42,34 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         var titleLabelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(titleLabel, titleLabelConstraints);
 
-        //Redirected Label
-        JLabel redirectedLabel = new JLabel("Redirected:");
-        var redirectedLabelConstraints = new GridBagConstraints(2, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
-        panel.add(redirectedLabel, redirectedLabelConstraints);
-
-        //From Label
-        JLabel fromLabel = new JLabel("From:");
-        var fromLabelConstraints = new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
-        panel.add(fromLabel, fromLabelConstraints);
-
-        //To Label
-        JLabel toLabel = new JLabel("To:");
-        var toLabelConstraints = new GridBagConstraints(4, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
-        panel.add(toLabel, toLabelConstraints);
-
         //Recent Label
         JLabel recentLabel = new JLabel("Recent: ");
-        var recentLabelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var recentLabelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 1, 10, 1), 0, 0);
         panel.add(recentLabel, recentLabelConstraints);
 
         //MostEdits Label
         JLabel editsNumLabel = new JLabel("Number of Edits:");
-        var editsNumLabelConstraints = new GridBagConstraints(3, 2, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var editsNumLabelConstraints = new GridBagConstraints(3, 2, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 1, 10, 1), 0, 0);
         panel.add(editsNumLabel, editsNumLabelConstraints);
 
         //Error Label
         JLabel errorLabel = new JLabel("Error:");
-        var errorLabelConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var errorLabelConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 1, 10, 1), 0, 0);
         panel.add(errorLabel, errorLabelConstraints);
 
         //ErrorDisplay Label
         JLabel errorDisplayLabel = new JLabel("");
-        var errorDisplayLabelConstraints = new GridBagConstraints(1, 4, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var errorDisplayLabelConstraints = new GridBagConstraints(1, 4, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 1, 10, 1), 0, 0);
         panel.add(errorDisplayLabel, errorDisplayLabelConstraints);
 
         //Make the input window
         JTextField txtInput = new JTextField("");
-        var txtInputConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var txtInputConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(15, 15, 15, 15), 0, 0);
         panel.add(txtInput, txtInputConstraints);
 
         //Make the revisions number window
         JTextField numberInput = new JTextField("");
-        var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(15, 15, 15, 15), 0, 0);
         panel.add(numberInput, numberInputConstraints);
 
         //Make Scrollable List for Timestamps
@@ -138,15 +123,15 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
                 String JSONString = JSONStringRetriever.getJSONstring(searchEntry,number);
                 if (JSONString.equals("Error")) { errorDisplayLabel.setText("No article exists. Try again.");}
                 else {
-                    WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
-                    Webpage webpage = WebpageBuilder.buildAWebpage(webInfo);
+                    PageInfo pageInfo = JSONStringParser.parseJSONString(JSONString);
+                    Webpage webpage = WebpageBuilder.buildAWebpage(pageInfo);
                     Sorter sorter = new Sorter(webpage.getSortedByTimeStamp(),webpage.getSortedByQuantity());
-
+                    if (!webpage.getFrom().isEmpty()){
+                        errorDisplayLabel.setText("Redirected from: " + webpage.getFrom() + " to: " + webpage.getTo());
+                    }
                     recentLabel.setText(number + " Recent:");
                     editsNumLabel.setText("Number of Edits (based on " + number + " recent):");
                     titleLabel.setText("Title: " + webpage.getTitle());
-                    fromLabel.setText("From: " + webpage.getFrom());
-                    toLabel.setText("To: " + webpage.getTo());
                     timestampArray.setListData(sorter.sortedFormattedTimeStamps);
                     usernameArray.setListData(sorter.sortedByTSUsernames);
                     usernameEditsArray.setListData(sorter.sortedByEUsernames);
@@ -158,7 +143,7 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         });
 
         //Closing thoughts, final window creation
-        setPreferredSize(new Dimension(1300, 1300));
+        setPreferredSize(new Dimension(1000, 800));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
