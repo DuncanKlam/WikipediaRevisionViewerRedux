@@ -15,7 +15,7 @@ class JSONStringRetrieverTest {
     @Test
     void getJSONstring() throws IOException {
         try {
-            assertEquals(JSONString, JSONStringRetriever.getJSONstring("obama","30"));
+            assertEquals(JSONString, JSONStringRetriever.getJSONstring("obama", "30"));
         }
         catch (IOException e){
             System.out.println("IOException");

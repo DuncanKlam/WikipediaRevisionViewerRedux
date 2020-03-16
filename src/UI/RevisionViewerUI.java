@@ -1,5 +1,6 @@
 package UI;
 
+import com.sun.scenario.effect.impl.sw.java.JSWColorAdjustPeer;
 import domain.WebInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
@@ -13,7 +14,6 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class RevisionViewerUI extends JFrame implements ActionListener {
 
@@ -24,6 +24,7 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         UIManager.put("Label.font", new FontUIResource(new Font("Roboto", Font.PLAIN, 20)));
         UIManager.put("Button.font", new FontUIResource(new Font("Roboto", Font.PLAIN, 20)));
 
+
         //Create grid panel that buttons and label will go into
         JPanel panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -32,32 +33,32 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
 
         //Input Label
         JLabel inputLabel = new JLabel("Input:");
-        var inputLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var inputLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(inputLabel, inputLabelConstraints);
 
         //#orevisions Label
         JLabel numORevisionsLabel = new JLabel("# o' revisions");
-        var numORevisionsLabelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var numORevisionsLabelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(numORevisionsLabel, numORevisionsLabelConstraints);
 
         //Title Label
         JLabel titleLabel = new JLabel("Title:");
-        var titleLabelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var titleLabelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(titleLabel, titleLabelConstraints);
 
         //Redirected Label
         JLabel redirectedLabel = new JLabel("Redirected:");
-        var redirectedLabelConstraints = new GridBagConstraints(2, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var redirectedLabelConstraints = new GridBagConstraints(2, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(redirectedLabel, redirectedLabelConstraints);
 
         //From Label
         JLabel fromLabel = new JLabel("From:");
-        var fromLabelConstraints = new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var fromLabelConstraints = new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(fromLabel, fromLabelConstraints);
 
         //To Label
         JLabel toLabel = new JLabel("To:");
-        var toLabelConstraints = new GridBagConstraints(4, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var toLabelConstraints = new GridBagConstraints(4, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 1, 20, 1), 0, 0);
         panel.add(toLabel, toLabelConstraints);
 
         //Recent Label
@@ -77,7 +78,7 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
 
         //ErrorDisplay Label
         JLabel errorDisplayLabel = new JLabel("");
-        var errorDisplayLabelConstraints = new GridBagConstraints(1, 4, 3, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        var errorDisplayLabelConstraints = new GridBagConstraints(1, 4, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(errorDisplayLabel, errorDisplayLabelConstraints);
 
         //Make the input window
@@ -90,31 +91,57 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
         panel.add(numberInput, numberInputConstraints);
 
-        //Make empty Jlist for timestamps
+
+        //Make Scrollable List for Timestamps
         JList<Object> timestampArray = new JList<>();
-        var timestampArrayConstraints = new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(timestampArray, timestampArrayConstraints);
+        timestampArray.setLayoutOrientation(JList.VERTICAL);
+        JScrollPane TSScrollPane = new JScrollPane(timestampArray);
+        TSScrollPane.setMinimumSize(new Dimension(200, 200));
+        TSScrollPane.setMaximumSize(new Dimension(200, 500));
+        var TSScrollPaneConstraints = new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        //panel.add(TSScrollPane, TSScrollPaneConstraints);
 
-        //Make empty Jlist for usernames
+        //Make Scrollable List for Usernames
         JList<Object> usernameArray = new JList<>();
-        var usernameArrayConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(usernameArray, usernameArrayConstraints);
+        usernameArray.setLayoutOrientation(JList.VERTICAL);
+        JScrollPane USScrollPane = new JScrollPane(usernameArray);
+        USScrollPane.setMinimumSize(new Dimension(200,200));
+        USScrollPane.setMaximumSize(new Dimension(200,500));
+        var USScrollPaneConstraints = new GridBagConstraints(0, 3, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        //panel.add(USScrollPane, USScrollPaneConstraints);
 
-        //Make empty Jlist for editsUsernames
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,USScrollPane, TSScrollPane);
+        panel.add(splitPane, USScrollPaneConstraints);
+
+        //Make Scrollable List for editsUsernames
         JList<Object> usernameEditsArray = new JList<>();
-        var usernameEditsArrayConstraints = new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(usernameEditsArray, usernameEditsArrayConstraints);
+        usernameEditsArray.setLayoutOrientation(JList.VERTICAL);
+        JScrollPane UEScrollPane = new JScrollPane(usernameEditsArray);
+        UEScrollPane.setMinimumSize(new Dimension(200,200));
+        UEScrollPane.setMaximumSize(new Dimension(200,500));
+        var UEScrollPaneConstraints = new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(usernameEditsArray, UEScrollPaneConstraints);
 
-        //Make empty Jlist for editNumbers
+        //Make Scrollable List for editNumbers
         JList<Object> editNumberArray = new JList<>();
-        var editNumberArrayConstraints = new GridBagConstraints(4, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        panel.add(editNumberArray, editNumberArrayConstraints);
+        editNumberArray.setLayoutOrientation(JList.VERTICAL);
+        JScrollPane UENScrollPane = new JScrollPane(editNumberArray);
+        UENScrollPane.setMinimumSize(new Dimension(200,200));
+        UENScrollPane.setMaximumSize(new Dimension(200,500));
+        var UENScrollpaneConstraints = new GridBagConstraints(4, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(editNumberArray, UENScrollpaneConstraints);
+
+        //Make Quit button
+        JButton quitButton = new JButton("Quit");
+        var quitButtonConstraints = new GridBagConstraints(4, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        panel.add(quitButton, quitButtonConstraints);
 
         //Make getRevisions Button
         JButton revisionsButton = new JButton("fetch");
         var revisionsButtonConstraints = new GridBagConstraints(4, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(revisionsButton, revisionsButtonConstraints);
         revisionsButton.addActionListener(e -> {
+            errorDisplayLabel.setText("");
             String searchEntry = txtInput.getText();
             String number = numberInput.getText();
             if (!JSONStringRetriever.isConnected()) { errorDisplayLabel.setText("Internet is not connected.");}
@@ -124,25 +151,17 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
                 else {
                     WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
                     Webpage webpage = WebpageBuilder.buildAWebpage(webInfo);
+                    Sorter sorter = new Sorter(webpage.getSortedByTimeStamp(),webpage.getSortedByQuantity());
 
                     recentLabel.setText(number + " Recent:");
                     editsNumLabel.setText("Number of Edits (based on " + number + " recent):");
                     titleLabel.setText("Title: " + webpage.getTitle());
                     fromLabel.setText("From: " + webpage.getFrom());
                     toLabel.setText("To: " + webpage.getTo());
-
-                    Sorter sorter = new Sorter(webpage.getSortedByTimeStamp(),webpage.getSortedByQuantity());
-
-                    panel.remove(timestampArray);
-                    panel.add(new JList(sorter.sortedFormattedTimeStamps),timestampArrayConstraints);
-                    panel.remove(usernameArray);
-                    panel.add(new JList(sorter.sortedByTSUsernames),usernameArrayConstraints);
-
-                    panel.remove(usernameEditsArray);
-                    panel.add(new JList(sorter.sortedByEUsernames),usernameEditsArrayConstraints);
-                    panel.remove(editNumberArray);
-                    panel.add(new JList(sorter.sortedUserEdits),editNumberArrayConstraints);
-
+                    timestampArray.setListData(sorter.sortedFormattedTimeStamps);
+                    usernameArray.setListData(sorter.sortedByTSUsernames);
+                    usernameEditsArray.setListData(sorter.sortedByEUsernames);
+                    editNumberArray.setListData(sorter.sortedEValues);
                 }
             } catch (Exception | ParameterIsNotJSONStringException ex) {
                 ex.printStackTrace();

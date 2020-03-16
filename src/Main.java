@@ -1,23 +1,14 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import domain.TimeStamp;
-=======
->>>>>>> parent of 02e2728... Added Ability to change number of results
-=======
-import UI.RevisionViewerUI;
->>>>>>> parent of 56a31ae... Revert "Added Ability to change number of results"
 import domain.WebInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
 import utils.JSONStringParser;
 import utils.JSONStringRetriever;
+import utils.Sorter;
 import utils.WebpageBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Time;
-import java.util.Map;
 
 public class Main {
 
@@ -28,90 +19,40 @@ public class Main {
                 String input = br.readLine();
 
                 if (input.equals("quit")) {
-                    break;}
+                    break;
+                }
                 if (!JSONStringRetriever.isConnected()) {
                     System.out.println("Internet is not connected.");
-                    break;}
+                    break;
+                }
 
-                String JSONString = JSONStringRetriever.getJSONstring(input,"50");
+                String JSONString = JSONStringRetriever.getJSONstring(input, "30");
                 if (JSONString.equals("Error")) {
                     System.out.println("No article exists. Please try again.");
                 } else {
                     WebInfo webInfo = JSONStringParser.parseJSONString(JSONString);
                     Webpage webpage = WebpageBuilder.buildAWebpage(webInfo);
 
-                    if(!webpage.getTo().isEmpty()){
-                        System.out.printf("Redirected:\n     From: %s\n     To: %s\n\n",webpage.getFrom(),webpage.getTo());
+                    if (!webpage.getTo().isEmpty()) {
+                        System.out.printf("Redirected:\n     From: %s\n     To: %s\n\n", webpage.getFrom(), webpage.getTo());
                     }
                     System.out.printf("Page Title: %s\n\n", webpage.getTitle());
 
                     System.out.println("Type 'a' to see a list of the 30 most recent edits.");
                     System.out.println("Type 'b' to see a list of who has made the most recent edits.");
                     String displayChoice = br.readLine();
+                    Sorter sorter = new Sorter(webpage.getSortedByTimeStamp(),webpage.getSortedByQuantity());
                     if (displayChoice.equals("a")) {
-<<<<<<< HEAD
-                        Object[] keyObjArray = webpage.getSortedByTimeStamp().keySet().toArray();
-                        TimeStamp[] keyArray = new TimeStamp[keyObjArray.length];
-                        Object[] valueObjArray = webpage.getSortedByTimeStamp().values().toArray();
-                        String[] valueArray = new String[valueObjArray.length];
-                        for (int k=0; k<keyObjArray.length; k++){
-                            keyArray[k] = (TimeStamp) keyObjArray[k];
-                            valueArray[k] = (String) valueObjArray[k];
-                        }
-                        TimeStamp intermediateStamp;
-                        String intermediateString;
-                        for(int i=0; i<keyArray.length;i++){
-                            for(int j=0; j<keyArray.length; j++){
-                                if(!keyArray[i].isYoungerThan(keyArray[j])){
-                                    intermediateStamp = keyArray[i];
-                                    keyArray[i] = keyArray[j];
-                                    keyArray[j] = intermediateStamp;
-
-                                    intermediateString = valueArray[i];
-                                    valueArray[i] = valueArray[j];
-                                    valueArray[j] = intermediateString;
-                                }
-                            }
-                        }
-                        for (int index = 0; index < keyArray.length; index++){
-                            System.out.printf("%-3s %-25.25s at %s\n", index+1 +".", valueArray[index],keyArray[index].getFormattedTimeStamp());
-                        }
-                    }
-                    else if (displayChoice.equals("b")) {
-                        Object[] keyObjArray = webpage.getSortedByQuantity().keySet().toArray();
-                        String[] keyArray = new String[keyObjArray.length];
-                        Object[] valueObjArray = webpage.getSortedByQuantity().values().toArray();
-                        Integer[] valueArray = new Integer[valueObjArray.length];
-                        for (int k=0; k<keyObjArray.length; k++){
-                            keyArray[k] = (String) keyObjArray[k];
-                            valueArray[k] = (Integer) valueObjArray[k];
-                        }
-                        int index = 1;
-                        for (int g=keyArray.length-1; g > 0; g--){
-                            String pluralizer = "";
-                            if (valueArray[g]>1){
-                                pluralizer = "s";
-                            }
-                            System.out.printf("%-3s %-25.25s made %d edit%s\n", index +".",keyArray[g],valueArray[g], pluralizer);
-                            index++;
-=======
                         String[] timeStamps = sorter.sortedFormattedTimeStamps;
                         String[] tsUsernames = sorter.sortedByTSUsernames;
-                        for (int index = 0; index < timeStamps.length; index++){
-                            System.out.printf("%-25.25s at %s\n",tsUsernames[index] ,timeStamps[index]);
+                        for (int index = 0; index < timeStamps.length; index++) {
+                            System.out.printf("%-25.25s at %s\n", tsUsernames[index], timeStamps[index]);
                         }
-                    }
-                    else if (displayChoice.equals("b")) {
+                    } else if (displayChoice.equals("b")) {
                         String[] eUsernames = sorter.sortedByEUsernames;
-                        String[] editValues = sorter.sortedUserEdits;
-<<<<<<< HEAD
+                        String[] editValues = sorter.sortedEValues;
                         for (int index = 0; index < eUsernames.length; index++){
                             System.out.printf("%-25.25s made %s\n",eUsernames[index],editValues[index]);
->>>>>>> parent of 02e2728... Added Ability to change number of results
-=======
-                        for (int index = 0; index < eUsernames.length - 1; index++){
-                            System.out.printf("%-25.25s made %s\n",eUsernames[index], editValues[index]);
->>>>>>> parent of 56a31ae... Revert "Added Ability to change number of results"
                         }
                     } else {
                         System.out.println("Incorrect Input. Please Try again.");
