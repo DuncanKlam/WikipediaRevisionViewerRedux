@@ -1,13 +1,9 @@
 package UI;
 
-import com.sun.scenario.effect.impl.sw.java.JSWColorAdjustPeer;
 import domain.WebInfo;
 import domain.Webpage;
 import exceptions.ParameterIsNotJSONStringException;
-import utils.JSONStringParser;
-import utils.JSONStringRetriever;
-import utils.Sorter;
-import utils.WebpageBuilder;
+import utils.*;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -26,8 +22,8 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
 
 
         //Create grid panel that buttons and label will go into
-        JPanel panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
+        JPanel panel = new JPanel();
         panel.setLayout(gridBagLayout);
         setContentPane(panel);
 
@@ -83,12 +79,12 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
 
         //Make the input window
         JTextField txtInput = new JTextField("");
-        var txtInputConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
+        var txtInputConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(txtInput, txtInputConstraints);
 
         //Make the revisions number window
         JTextField numberInput = new JTextField("");
-        var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);;
+        var numberInputConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(numberInput, numberInputConstraints);
 
         //Make Scrollable List for Timestamps
@@ -127,9 +123,7 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
         JButton quitButton = new JButton("Quit");
         var quitButtonConstraints = new GridBagConstraints(4, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(quitButton, quitButtonConstraints);
-        quitButton.addActionListener(e -> {
-            System.exit(0);
-        });
+        quitButton.addActionListener(e -> System.exit(0));
 
         //Make getRevisions Button
         JButton revisionsButton = new JButton("fetch");
@@ -161,11 +155,10 @@ public class RevisionViewerUI extends JFrame implements ActionListener {
             } catch (Exception | ParameterIsNotJSONStringException ex) {
                 ex.printStackTrace();
             }
-
         });
 
         //Closing thoughts, final window creation
-        setPreferredSize(new Dimension(1300, 1000));
+        setPreferredSize(new Dimension(1300, 1300));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);

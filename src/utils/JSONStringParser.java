@@ -15,7 +15,6 @@ public class JSONStringParser {
         if (JSONString.charAt(0) != '{') {
             throw new ParameterIsNotJSONStringException();
         }
-
         JsonParser jsonParser = new JsonParser();
         JsonElement rootElement = jsonParser.parse(JSONString);
         JsonObject query = rootElement.getAsJsonObject().getAsJsonObject("query");

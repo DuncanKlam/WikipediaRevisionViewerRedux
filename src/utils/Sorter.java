@@ -2,6 +2,7 @@ package utils;
 
 import domain.TimeStamp;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Sorter {
@@ -10,6 +11,7 @@ public class Sorter {
     public String[] sortedByTSUsernames;
     public String[] sortedByEUsernames;
     public String[] sortedEValues;
+    public ArrayList<Integer> coordinates;
 
     public Sorter(Map<TimeStamp, String> sortedByTimeStamp, Map<String, Integer> sortedByQuantity) {
         //Create arrays for conversion
@@ -75,6 +77,11 @@ public class Sorter {
             sortedByEUsernames[index] = String.format("%-3s %-25.25s", index+1+".", eUsernamesArray[i]);
             sortedEValues[index] = String.format("%d edit%s", userEditNumbersArray[i], pluralize);
             index++;
+        }
+
+        coordinates = new ArrayList<>(tSArray.length);
+        for (TimeStamp timeStamp : tSArray) {
+            coordinates.add(timeStamp.getCoordinates()[0]);
         }
     }
 }

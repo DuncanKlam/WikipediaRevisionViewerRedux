@@ -58,9 +58,8 @@ public class TimeStamp {
                         if (this.minute < stampToBeChecked.getMinute()){
                             return true;}
                         else if(this.minute == stampToBeChecked.getMinute()){
-                            if (this.second < stampToBeChecked.getSecond()){
-                                return true;}
-                            else{return false;}}
+                            return this.second < stampToBeChecked.getSecond();
+                        }
                         else{return false;}}
                     else{return false;}}
                 else{return false;}}
@@ -88,6 +87,10 @@ public class TimeStamp {
         return AmOrPm;
     }
 
+    public int[] getCoordinates(){
+        return new int[]{year + month + day, hour + minute + second};
+    }
+
     private String makeDoubleDigits(int number) {
         if (number < 10){
             return "0"+number;
@@ -100,19 +103,16 @@ public class TimeStamp {
         if(number < 10){
             return numberSuffixes[number];
         }
-        if(10 <= number && number < 20){
+        else if(number < 20){
             return "th";
         }
-        if(20 <= number && number < 30){
+        else if(number < 30){
             number = number - 20;
             return numberSuffixes[number];
         }
-        if (30 <= number){
+        else {
             number = number - 30;
             return  numberSuffixes[number];
-        }
-        else{
-            return "?";
         }
     }
 }

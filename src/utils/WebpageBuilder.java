@@ -52,8 +52,8 @@ public class WebpageBuilder {
         int index = 0;
         for(String user : userSet){
             int editsMade = 0;
-            for (int k=0; k<users.length; k++){
-                if (user.contains(users[k])){
+            for (String s : users) {
+                if (user.contains(s)) {
                     editsMade++;
                 }
             }
@@ -83,7 +83,7 @@ public class WebpageBuilder {
     {
         List<Map.Entry<String, Integer> > list = new LinkedList<>(hm.entrySet());
 
-        Collections.sort(list, Map.Entry.comparingByValue());
+        list.sort(Map.Entry.comparingByValue());
 
         HashMap<String, Integer> temp = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> aa : list) {
